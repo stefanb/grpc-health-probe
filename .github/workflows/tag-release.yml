@@ -20,12 +20,19 @@ jobs:
           fetch-depth: 0  # Important to fetch all tags and history
           fetch-tags: true # Fetch all tags to ensure we can create a new one
 
+      - run: git tag --list --sort=creatordate
+      - run: git tag --list --sort=version:refname
+      - run: git rev-list --tags --max-count=1
+      - run: git describe --tags
+      - run: git describe --tags `git rev-list --tags --max-count=1`
+      - run: git log
+
       # Determine the new version number
       - name: Get latest tag and increment
         id: versioning
         run: |
           # Fetch all tags
-          git fetch --tags
+          # git fetch --tags
 
           # Get the highest tag number, and add 1 to the patch
           TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
