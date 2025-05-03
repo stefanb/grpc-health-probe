@@ -31,9 +31,6 @@ jobs:
       - name: Get latest tag and increment
         id: versioning
         run: |
-          # Fetch all tags
-          # git fetch --tags
-
           # Get the highest tag number, and add 1 to the patch
           TAG=$(git describe --tags `git rev-list --tags --max-count=1`)
           echo "Current highest tag is $TAG"
@@ -45,14 +42,10 @@ jobs:
           # Set NEW_TAG as an output variable
           echo "NEW_VERSION=$NEW_TAG" >> $GITHUB_ENV
 
-      # Create a new tag
-      - name: Create Git tag for PR
-        uses: actions/github-script@v7
-        with:
-          script: |
-            github.rest.git.createRef({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              ref: "refs/tags/${{env.NEW_VERSION}}",
-              sha: context.sha
-            })
+      - name: Create a new Git tag
+        run: |
+            echo "Creating new tag ${{ env.NEW_VERSION }}"
+            git tag ${{ env.NEW_VERSION }}
+            git push origin ${{ env.NEW_VERSION }}
+            echo "Created new tag ${{ env.NEW_VERSION }}"
+
