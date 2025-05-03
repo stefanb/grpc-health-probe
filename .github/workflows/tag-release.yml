@@ -42,10 +42,13 @@ jobs:
           # Set NEW_TAG as an output variable
           echo "NEW_VERSION=$NEW_TAG" >> $GITHUB_ENV
 
-      - name: Create a new Git tag
+      - name: Create a new release
         run: |
-            echo "Creating new tag ${{ env.NEW_VERSION }}"
-            git tag ${{ env.NEW_VERSION }}
-            git push origin ${{ env.NEW_VERSION }}
-            echo "Created new tag ${{ env.NEW_VERSION }}"
+            echo "Creating new release ${{ env.NEW_VERSION }}"
+            gh release create ${{ env.NEW_VERSION }} \
+              --title "${{ env.NEW_VERSION }}" \
+              --repo ${{ github.repository }} \
+              --target ${{ github.sha }}
+
+            echo "Created new release ${{ env.NEW_VERSION }}"
 
