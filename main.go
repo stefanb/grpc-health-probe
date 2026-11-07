@@ -219,11 +219,17 @@ func buildCredentials(skipVerify bool, caCerts, clientCert, clientKey, serverNam
 var versionTag = "" // set from git tag via ldflags during build
 
 func probeVersion() string {
+	info, _ := debug.ReadBuildInfo()
+	return formatVersion(versionTag, info)
+}
+
+// formatVersion builds the -version output from the ldflags tag and the build
+// info, which is nil when the binary carries none.
+func formatVersion(tag string, info *debug.BuildInfo) string {
 	version := "vcs info was not included in build"
 	dirty := ""
 
-	tag := versionTag
-	if info, ok := debug.ReadBuildInfo(); ok {
+	if info != nil {
 		// without ldflags, fall back to the module version go stamps from git or go install
 		if tag == "" && info.Main.Version != "(devel)" {
 			tag = info.Main.Version
