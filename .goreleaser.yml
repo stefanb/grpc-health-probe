@@ -78,15 +78,15 @@ release:
 
     **Verify** the signed build provenance with the [GitHub CLI](https://cli.github.com/). `<file>` is any binary or `.sbom.json` listed in `checksums.txt`, e.g. `grpc_health_probe-linux-arm64`:
     ```sh
-    gh attestation verify <file> -R grpc-ecosystem/grpc-health-probe
-    gh attestation verify oci://{{ .Env.IMAGE_REPO }}:{{ .Tag }} -R grpc-ecosystem/grpc-health-probe
-    gh attestation verify oci://{{ .Env.IMAGE_REPO }}:{{ .Tag }} -R grpc-ecosystem/grpc-health-probe --predicate-type https://spdx.dev/Document
+    gh attestation verify <file> -R stefanb/grpc-health-probe
+    gh attestation verify oci://{{ .Env.IMAGE_REPO }}:{{ .Tag }} -R stefanb/grpc-health-probe
+    gh attestation verify oci://{{ .Env.IMAGE_REPO }}:{{ .Tag }} -R stefanb/grpc-health-probe --predicate-type https://spdx.dev/Document
     ```
     Without GitHub's attestation API, verify against the `checksums.txt.sigstore.json` bundle from this release:
     ```sh
-    gh attestation verify <file> --bundle checksums.txt.sigstore.json -R grpc-ecosystem/grpc-health-probe
+    gh attestation verify <file> --bundle checksums.txt.sigstore.json -R stefanb/grpc-health-probe
     ```
 
-    **Full Changelog**: https://github.com/grpc-ecosystem/grpc-health-probe/compare/{{ .PreviousTag }}...{{ .Tag }}
+    **Full Changelog**: https://github.com/stefanb/grpc-health-probe/compare/{{ .PreviousTag }}...{{ .Tag }}
 
     **Open Source Insights**: [{{ .Tag }}](https://deps.dev/go/github.com%2Fgrpc-ecosystem%2Fgrpc-health-probe/{{ .Tag }}) (compare to [{{ .PreviousTag }}](https://deps.dev/go/github.com%2Fgrpc-ecosystem%2Fgrpc-health-probe/{{ .PreviousTag }}/compare?v2={{ .Tag }}))

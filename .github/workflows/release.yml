@@ -38,6 +38,10 @@ jobs:
     # GoReleaser's sboms (.goreleaser.yml) and the image SBOM below run syft.
     - name: Install Syft
       uses: anchore/sbom-action/download-syft@66cbf4bc1f1c0d2edc94016e65bc221b6bb0ad6c # v0.24.3
+    # TEST RELEASE ON THE FORK ONLY: the fork lacks upstream's recent tags, so
+    # fetch them for GoReleaser's previous tag (v0.4.61) and changelog.
+    - name: Fetch upstream tags
+      run: git fetch --tags https://github.com/grpc-ecosystem/grpc-health-probe.git
 
     - name: Binary builds with GoReleaser
       uses: goreleaser/goreleaser-action@f06c13b6b1a9625abc9e6e439d9c05a8f2190e94 # v7.2.3
