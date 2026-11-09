@@ -71,6 +71,8 @@ dockers_v2:  # See https://goreleaser.com/customization/package/dockers_v2/
     - linux/s390x
 
 release:
+  # A tag with a semver pre-release suffix (v0.4.62-dev.pr354.1) leaves "Latest" where it is.
+  make_latest: '{{ not .Prerelease }}'
   footer: |
     **Container Image** in [{{ .Env.IMAGE_REPO }}](https://{{ .Env.IMAGE_REPO }}): `{{ .Env.IMAGE_REPO }}:{{ .Tag }}`
 
